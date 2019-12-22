@@ -9,6 +9,7 @@ set AGSGAMEPROJECT="%~1"
 
 :NOPARAM
 
+dir "C:\Program Files (x86)\"
 dir %AGSGAMEPROJECT%
 
 call %AGSEDITOR% /compile %AGSGAMEPROJECT%\ags_test_game\Game.agf
