@@ -53,7 +53,7 @@ set INSTALL[2][url]=https://github.com/adventuregamestudio/ags/releases/download
 set INSTALL[2][md5]=eafe8e6279eba2cc43c5cac2d4ee41ff
 set INSTALL[2][cmd]=start /b /wait  %CACHE%\AGS-3.5.0.22.exe /SP- /VERYSILENT /NORESTART /MERGETASKS="!desktopicon"
 
-for /l %%n in (0,1,2) do (
+for /l %%n in (0,2) do (
 	echo Checking installation: !INSTALL[%%n][name]!
 	call :ISINSTALLED "!INSTALL[%%n][name]!" "!INSTALL[%%n][version]!" || (
 		for %%i in (!INSTALL[%%n][url]!) do (
