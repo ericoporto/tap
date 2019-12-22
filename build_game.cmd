@@ -9,6 +9,8 @@ set AGSGAMEPROJECT="%~1"
 
 :NOPARAM
 
+dir %AGSGAMEPROJECT%
+
 call %AGSEDITOR% /compile %AGSGAMEPROJECT%\ags_test_game\Game.agf
 
 endlocal
