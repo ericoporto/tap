@@ -6,4 +6,5 @@ install:
   - cd %APPVEYOR_BUILD_FOLDER%
 build_script:
   - call install_ags.cmd
+  - REG import ags_key.reg
   - call build_game.cmd
