@@ -41,19 +41,13 @@ set INSTALL[0][url]=https://www.7-zip.org/a/7z1805.msi
 set INSTALL[0][md5]=83b2e31c6534de4b119ef32c7ab97773
 set INSTALL[0][cmd]=msiexec /i %CACHE%\7z1805.msi /qb
 
-set INSTALL[1][name]=Microsoft .NET Framework 1.1
-set INSTALL[1][version]=1.1.4322
-set INSTALL[1][url]=https://download.microsoft.com/download/a/a/c/aac39226-8825-44ce-90e3-bf8203e74006/dotnetfx.exe
-set INSTALL[1][md5]=52456ac39bbb4640930d155c15160556
-set INSTALL[1][cmd]=start /wait %CACHE%\dotnetfx.exe /q:a /c:"install.exe /qb /l"
+set INSTALL[1][name]=Adventure Game Studio 3.5.0
+set INSTALL[1][version]=3.5.0.22
+set INSTALL[1][url]=https://github.com/adventuregamestudio/ags/releases/download/v.3.5.0.22/AGS-3.5.0.22.exe
+set INSTALL[1][md5]=eafe8e6279eba2cc43c5cac2d4ee41ff
+set INSTALL[1][cmd]=start /b /wait  %CACHE%\AGS-3.5.0.22.exe /SP- /VERYSILENT /NORESTART /MERGETASKS="!desktopicon"
 
-set INSTALL[2][name]=Adventure Game Studio 3.5.0
-set INSTALL[2][version]=3.5.0.22
-set INSTALL[2][url]=https://github.com/adventuregamestudio/ags/releases/download/v.3.5.0.22/AGS-3.5.0.22.exe
-set INSTALL[2][md5]=eafe8e6279eba2cc43c5cac2d4ee41ff
-set INSTALL[2][cmd]=start /b /wait  %CACHE%\AGS-3.5.0.22.exe /SP- /VERYSILENT /NORESTART /MERGETASKS="!desktopicon"
-
-for /l %%n in (0,2) do (
+for /l %%n in (0,1,1) do (
 	echo Checking installation: !INSTALL[%%n][name]!
 	call :ISINSTALLED "!INSTALL[%%n][name]!" "!INSTALL[%%n][version]!" || (
 		for %%i in (!INSTALL[%%n][url]!) do (
