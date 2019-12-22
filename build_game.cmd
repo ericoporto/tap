@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 set AGSEDITOR="C:\Program Files (x86)\Adventure Game Studio 3.5.0\AGSEditor.exe"
-set AGSGAMEPROJECT=%SYSTEMDRIVE%\projects\ags_test_game
+set AGSGAMEPROJECT=%SYSTEMDRIVE%\projects\ags-test-game
 
 if [%~1]==[] goto :NOPARAM
 set AGSGAMEPROJECT="%~1"
