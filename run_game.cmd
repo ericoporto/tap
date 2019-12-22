@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 set AGSGAMEPROJECT=%SYSTEMDRIVE%\projects\ags-test-game
-set SAVEGAMEDIR=C:\Users\appveyor\SAVEDG~1/ags_test_game/
+set SAVEGAMEDIR=C:\Users\appveyor\SAVEDG~1\ags_test_game
 
 if [%~1]==[] goto :NOPARAM
 set AGSGAMEPROJECT="%~1"
@@ -12,6 +12,6 @@ set AGSGAMEPROJECT="%~1"
 call %AGSGAMEPROJECT%\ags_test_game\Compiled\Windows\ags_test_game.exe
 dir %SAVEGAMEDIR%
 
-C:\Users\appveyor\SAVEDG~1/ags_test_game/
+type %SAVEGAMEDIR%\agstest.log
 
 endlocal
