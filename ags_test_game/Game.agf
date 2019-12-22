@@ -83,7 +83,7 @@
       <RenderAtScreenResolution>UserDefined</RenderAtScreenResolution>
     </Settings>
     <RuntimeSetup>
-      <GraphicsDriver>D3D9</GraphicsDriver>
+      <GraphicsDriver>Software</GraphicsDriver>
       <Windowed>False</Windowed>
       <FullscreenGameScaling>ProportionalStretch</FullscreenGameScaling>
       <GameScaling>MaxInteger</GameScaling>
@@ -93,9 +93,9 @@
       <AAScaledSprites>False</AAScaledSprites>
       <DowngradeTo16bit>False</DowngradeTo16bit>
       <RenderAtScreenResolution>False</RenderAtScreenResolution>
-      <DigitalSound>Default</DigitalSound>
-      <MidiSound>Default</MidiSound>
-      <UseVoicePack>True</UseVoicePack>
+      <DigitalSound>Disabled</DigitalSound>
+      <MidiSound>Disabled</MidiSound>
+      <UseVoicePack>False</UseVoicePack>
       <ThreadedAudio>False</ThreadedAudio>
       <Translation />
       <AutoLockMouse>False</AutoLockMouse>
