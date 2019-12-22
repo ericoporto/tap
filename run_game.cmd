@@ -10,6 +10,6 @@ set AGSGAMEPROJECT="%~1"
 :NOPARAM
 
 call %AGSGAMEPROJECT%\ags_test_game\Compiled\Windows\ags_test_game.exe
-dir %SAVEGAMEDIR%
+call %AGSGAMEPROJECT%\ags_test_game\Compiled\Windows\ags_test_game.exe --tell
 
 endlocal
