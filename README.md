@@ -6,11 +6,11 @@
 
 An example test file output by this libary may look like:
    
-   1..4
-   ok 1 - Input file opened
-   not ok 2 - First line of the input valid
-   ok 3 - Read the rest of the file
-   not ok 4 - Summarized correctly # TODO Not written yet
+    1..4
+    ok 1 - Input file opened
+    not ok 2 - First line of the input valid
+    ok 3 - Read the rest of the file
+    not ok 4 - Summarized correctly # TODO Not written yet
 
 ### The plan
 The plan tells how many tests will be run, or how many tests have run. 
@@ -19,7 +19,9 @@ once, whether at the beginning or end of the output. The plan is usually the
 first line of TAP output (although in future there may be a version line 
 before it) and it specifies how many test points are to follow. 
 For example, 
+
     1..10
+
 means you plan on running 10 tests. This is a safeguard in case your test 
 file dies silently in the middle of its run. The plan is optional but if 
 there is a plan before the test points it must be the first non-diagnostic 
@@ -34,6 +36,7 @@ point executed. There must be at least one test line in TAP output. Each test
 line comprises the following elements:
 
     ok or not ok
+
 This tells whether the test point passed or failed. It must be at the 
 beginning of the line. /^not ok/ indicates a failed test point. /^ok/ is a 
 successful test point. This is the only mandatory part of the line. Note that
