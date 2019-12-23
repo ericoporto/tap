@@ -4,6 +4,9 @@
 
 ## Test Anything Protocol - AGS Module
 
+The Module implements Test Anything Protocol for Adventure Game Studio. You
+can read more on it here: [testanything.org](https://testanything.org/)
+
 An example test file output by this libary may look like:
    
     1..4
