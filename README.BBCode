@@ -14,6 +14,8 @@ not ok 2 - First line of the input valid
 ok 3 - Read the rest of the file
 not ok 4 - Summarized correctly # TODO Not written yet[/code]
 
+The demo game will execute and exit, leaving a [tt]agstest.log[/tt] file, with the test results, under this game savegame directory (ex: [tt]C:\Users\%USERNAME%\SAVEDG~1\tap_demo[/tt]).
+
 [size=16px][b]Motivation[/b][/size]
 A long time ago, Morgan talked to me about tests and unit testing, and showed me this magical thing that is TAP. Time passed and after experimenting with a bunch of different continuous integration systems I discovered they were able to magically pickup the specific output from tap and understand them when they are output to the CI shell... A bit of fiddling around later I got it working with AGS! This has been laying around in my repository for quite sometime and I noticed I never released it as a module. So here it is!
 
@@ -55,7 +57,7 @@ tap.ok(!String.IsNullOrEmpty("with text"), "String.IsNullOrEmpty test non-empty 
 After you are done testing, state it.
 [code=ags]tap.done_testing();[/code]
 
-size=20px][b]TAP AGS Script API[/b][/size]
+[size=20px][b]TAP AGS Script API[/b][/size]
 [spoiler]
 [size=16px][b]tap.clean_test[/b][/size]
 
