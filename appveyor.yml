@@ -1,11 +1,31 @@
 version: 1.0.{build}
 image: Visual Studio 2019
-# init:
-#   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-install:
-  - cd %APPVEYOR_BUILD_FOLDER%
+
 build_script:
-  - call install_ags.cmd
-  - REG import ags_key.reg
-  - call build_game.cmd
+  - call dev_scripts\install_dependencies.cmd
+  - REG import dev_scripts\ags_key.reg                      # I don't know yet if this actually works or not, but the idea is to avoid pop-ups at all costs in AGS Editor.
+  - call dev_scripts\build_game.cmd
+  - call dev_scripts\package_game.cmd
   - call run_game.cmd
+
+artifacts:
+- path: dev_scripts\DIST\tap_demo_linux.tar.gz
+  name: tap_demo_linux.tar.gz
+- path: dev_scripts\DIST\tap_demo_windows.zip
+  name: tap_demo_windows.zip
+- path: dev_scripts\DIST\tap.scm
+  name: tap.scm
+- path: package.json
+  name: package.json
+  
+deploy:
+- provider: GitHub
+  auth_token:
+    secure: wZdCrU9dcec59hLKrRi7G6N4mWamWoDHcGTe4T2P5YJsV7CEYCyEcDwulO0V3bzK
+  artifact: tap.scm, tap_demo_linux.tar.gz, tap_demo_windows.zip, package.json
+  draft: false
+  prerelease: false
+  force_update: true          # it can't edit a release artifact if this is false
+  on:
+    branch: main              # release from main branch only
+    appveyor_repo_tag: true   # deploy on tag push only

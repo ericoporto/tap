@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<AGSModule>
+  <Name>tap</Name>                      <!-- set the module name -->
+  <Description>Test Anything Protocol for Adventure Game Studio.</Description> <!-- set the module description -->
+  <Author>eri0o</Author>                <!-- set the module author -->
+  <Version>0.1.0</Version>             <!-- set the module version -->
+  <Key>2082717294</Key>                  <!-- set the module unique key -->
+</AGSModule>
