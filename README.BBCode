@@ -1,0 +1,128 @@
+[size=14pt][b]tap[/b][/size] [color=gray][b] version 0.1.0 [/b][/color]
+[url=https://ci.appveyor.com/project/ericoporto/tap][size=15px][img]https://ci.appveyor.com/api/projects/status/2qakyfoixd50r78g/branch/main?svg=true[/img][/url]
+
+[url=https://github.com/ericoporto/tap/releases/download/0.1.0/tap.scm]Get Latest Release [b]tap.scm[/b][/url] | [url=https://github.com/ericoporto/tap]GitHub Repo[/url] | [url=https://github.com/ericoporto/tap/releases/download/0.1.0/tap_demo_windows.zip]Demo Windows[/url] | [url=https://github.com/ericoporto/tap/releases/download/0.1.0/tap_demo_linux.tar.gz]Demo Linux[/url] | [url=https://github.com/ericoporto/tap/archive/0.1.0.zip] Download project .zip [/url]
+
+[size=20px][b]Test Anything Protocol - AGS Module[/b][/size]
+
+[size=13px]This Module implements Test Anything Protocol for Adventure Game Studio. It's useful for unit testing! You can read more about it here: [url=https://testanything.org/]testanything.org[/url][/size]
+
+[size=13px]An example test file output by this libary may look like:[/size]
+[code=bash]1..4
+ok 1 - Input file opened
+not ok 2 - First line of the input valid
+ok 3 - Read the rest of the file
+not ok 4 - Summarized correctly # TODO Not written yet[/code]
+
+[size=16px][b]Motivation[/b][/size]
+A long time ago, Morgan talked to me about tests and unit testing, and showed me this magical thing that is TAP. Time passed and after experimenting with a bunch of different continuous integration systems I discovered they were able to magically pickup the specific output from tap and understand them when they are output to the CI shell... A bit of fiddling around later I got it working with AGS! This has been laying around in my repository for quite sometime and I noticed I never released it as a module. So here it is!
+
+[size=16px][b]The plan[/b][/size]
+The plan tells how many tests will be run, or how many tests have run.  It’s a check that the test file hasn’t stopped prematurely. It must appear  once, whether at the beginning or end of the output. The plan is usually the  first line of TAP output (although in future there may be a version line  before it) and it specifies how many test points are to follow.  For example,
+[code=bash]1..10[/code]
+means you plan on running 10 tests. This is a safeguard in case your test  file dies silently in the middle of its run. The plan is optional but if  there is a plan before the test points it must be the first non-diagnostic  line output by the test file. In certain instances a test file may not know  how many test points it will ultimately be running. In this case the plan can  be the last non-diagnostic line in the output. The plan cannot appear in the  middle of the output, nor can it appear more than once.
+
+[size=16px][b]The test line[/b][/size]
+The core of TAP is the test line. A test file prints one test line per test  point executed. There must be at least one test line in TAP output. Each test  line comprises the following elements:
+[code=bash]ok or not ok[/code]
+This tells whether the test point passed or failed. It must be at the  beginning of the line. /^not ok/ indicates a failed test point. /^ok/ is a  successful test point. This is the only mandatory part of the line. Note that unlike the Directives below, ok and not ok are case-sensitive.
+
+[size=16px][b]Test number[/b][/size]
+TAP expects the ok or not ok to be followed by a test point number.
+
+[size=16px][b]Description[/b][/size]
+Any text after the test number but before a # is the description of the test  point.
+[code=bash]ok 42 this is the description of the test[/code]
+
+[size=16px][b]Directive[/b][/size]
+The test point may include a directive, after a hash on the test line.  There are currently two directives allowed: TODO and SKIP. Hashes at the  beginning of a line are considered comments.
+
+[size=20px][b]Executing tap with AGS[/b][/size]
+
+Before running any test, remove any leftover files and from a previous run, by running a clean test.
+[code=ags]tap.clean_test()[/code]
+By default, test is printed to a file named [size=13px][tt][glow=gray,1,300]agstest.log[/glow][/tt][/size] on the saved games directory for the game under test.
+
+If you have a plan, state it before starting out.
+[code=ags]tap.plan(3);[/code]
+
+Then run the needed tests.
+[code=ags]String null_string;
+tap.ok(String.IsNullOrEmpty(null_string), "String.IsNullOrEmpty test null string");
+tap.ok(String.IsNullOrEmpty(""), "String.IsNullOrEmpty test empty string");
+tap.ok(!String.IsNullOrEmpty("with text"), "String.IsNullOrEmpty test non-empty string");[/code]
+
+After you are done testing, state it.
+[code=ags]tap.done_testing();[/code]
+
+size=20px][b]TAP AGS Script API[/b][/size]
+[spoiler]
+[size=16px][b]tap.clean_test[/b][/size]
+
+[code=ags]void tap.clean_test()[/code]
+This command removes previously outputed test log files if they exist. 
+
+[size=16px][b]tap.plan[/b][/size]
+
+[code=ags]void tap.plan(int n,  String skip_reason = 0)[/code]
+This allows setting a plan, so we know how many tests will be run. Just use it once for the group of tests following. If you want to start a new test, after a plan has been set, remember to call [tt][glow=gray,1,300]tap.done_testing()[/glow][/tt] before.
+
+Alternatively, you can pass [tt][glow=gray,1,300]NO_PLAN[/glow][/tt] if you have no plan.
+
+If the following tests are to be skipped, pass [[tt][glow=gray,1,300]SKIP_ALL[/glow][/tt], so all tests until next plan are skipped. They will still be executed, they just won't output log  or be considered whether they fail or succeed.
+
+[size=16px][b]tap.ok[/b][/size]
+
+[code=ags]void tap.ok(bool condition, String test_name = 0)[/code]
+This test will succeed if the condition is true, and fail if the condition is  false.
+
+[size=16px][b]tap.nok[/b][/size]
+
+[code=ags]void tap.nok(bool condition, String test_name = 0)[/code]
+This test will succeed if the condition is false, and fail if the condition is  true.
+
+[size=16px][b]tap.is[/b][/size]
+
+[code=ags]void tap.is(String got,  String expected, String test_name = 0)[/code]
+This test will succeed if [tt][glow=gray,1,300]got[/glow][/tt] and [tt][glow=gray,1,300]expected[/glow][/tt] matches. If this test fails, we can have some more diagnostic information since we know both inputs and the premise they are supposed to match.
+
+[size=16px][b]tap.isnt[/b][/size]
+
+[code=ags]void tap.isnt(String got,  String expected, String test_name = 0)[/code]
+This test will succeed if [tt][glow=gray,1,300]got[/glow][/tt] and [tt][glow=gray,1,300]expected[/glow][/tt] does not matches. If this test  fails, we can have some more diagnostic information since we know both inputs  and the premise they are not supposed to match.
+
+[size=16px][b]tap.is_int[/b][/size]
+
+[code=ags]void tap.is_int(int got,  int expected, String test_name = 0)[/code]
+This test will succeed if [tt][glow=gray,1,300]got[/glow][/tt] and [tt][glow=gray,1,300]expected[/glow][/tt] matches. If this test fails, we can have some more diagnostic information since we know both inputs and the premise they are supposed to match. This is for [tt][glow=gray,1,300]int[/glow][/tt] values.
+
+[size=16px][b]tap.isnt_int[/b][/size]
+
+[code=ags]void tap.isnt_int(int got,  int expected, String test_name = 0)[/code]
+This test will succeed if [tt][glow=gray,1,300]got[/glow][/tt] and [tt][glow=gray,1,300]expected[/glow][/tt] does not matches. If this test  fails, we can have some more diagnostic information since we know both inputs  and the premise they are not supposed to match. This is for [tt][glow=gray,1,300]int[/glow][/tt] values.
+
+[size=16px][b]tap.is_float[/b][/size]
+
+[code=ags]void tap.is_float(float got,  float expected, float epsilon, String test_name = 0)[/code]
+This test will succeed if [tt][glow=gray,1,300]got[/glow][/tt] and [tt][glow=gray,1,300]expected[/glow][/tt] matches. If this test fails, we can have some more diagnostic information since we know both inputs and the premise they are supposed to match. This is for [tt][glow=gray,1,300]float[/glow][/tt] values.
+
+[size=16px][b]tap.isnt_float[/b][/size]
+
+[code=ags]void tap.isnt_float(float got,  float expected, float epsilon, String test_name = 0)[/code]
+This test will succeed if [tt][glow=gray,1,300]got[/glow][/tt] and [tt][glow=gray,1,300]expected[/glow][/tt] does not matches. If this test  fails, we can have some more diagnostic information since we know both inputs  and the premise they are not supposed to match. This is for [tt][glow=gray,1,300]float[/glow][/tt] values.
+
+[size=16px][b]tap.done_testing[/b][/size]
+
+[code=ags]void tap.done_testing()[/code]
+After you are done testing, before calling the next plan, state you are done testing.
+
+[size=16px][b]tap.Harness[/b][/size]
+
+[code=ags]void tap.Harness()[/code]
+This outputs a small summary of currently tests and failures. Don't depend on this output format.
+[/spoiler]
+[size=20px][b]Author[/b][/size]
+Made by eri0o
+
+[size=20px][b]License[/b][/size]
+Distributed under MIT license. See  [url=https://github.com/ericoporto/tap/blob/main/LICENSE][tt]LICENSE[/tt][/url] for more information.
